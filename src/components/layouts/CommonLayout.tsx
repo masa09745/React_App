@@ -12,7 +12,7 @@ import IconButton from "@mui/material/IconButton"
 import { Drawer, List, Divider } from "@mui/material"
 import { ChevronLeftOutlined, Menu } from "@mui/icons-material"
 
-import { MenuList } from 'components/util/MenuList'
+import { MenuList } from 'components/utils/MenuList'
 import { Footer } from 'components/layouts/Footer'
 
 type CommonLayoutProps = {
