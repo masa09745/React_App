@@ -79,11 +79,12 @@ export const CreateMaintenance = () => {
 
   return(
     <>
-      <Typography variant="h5" component="h5" sx={{mb:1}}>機材情報作成フォーム</Typography>
-      <Link to={`/ships/${id}`} state={{id: id, selectShip: selectShip}}>
-        <Button variant="contained">機材情報一覧</Button>
-      </Link>
-      <Box sx={{width: 750, mx: "auto", p:1}}>
+      <Box sx={{ width: 900 }}>
+        <Typography variant="h5" component="h5" sx={{mb:1}}>機材情報作成フォーム</Typography>
+        <Link to={`/ships/${id}`} state={{id: id, selectShip: selectShip}}>
+          <Button variant="contained">機材情報一覧</Button>
+        </Link>
+        <Box sx={{ width:750, mx:"auto", p:1}}>
           <Typography variant="h5" component="h1">
             選択中の機番: {selectShip}
           </Typography>
@@ -180,10 +181,13 @@ export const CreateMaintenance = () => {
                   }
                 />
               </Grid>
+              <Grid>
+                <Button type="submit" variant="contained" >送信</Button>
+              </Grid>
             </Grid>
-            <Button type="submit" variant="contained" >送信</Button>
           </Box>
         </Box>
+      </Box>
     </>
   )
 
