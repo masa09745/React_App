@@ -2,30 +2,34 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = /* GraphQL */ `
-  query GetTodo($id: ID!) {
-    getTodo(id: $id) {
+export const getMaintenance = /* GraphQL */ `
+  query GetMaintenance($id: ID!) {
+    getMaintenance(id: $id) {
       id
-      name
-      description
-      createdAt
-      updatedAt
+      title
+      contents
+      maintenanceMessage
+      priority
+      completed
+      shipId
     }
   }
 `;
-export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
+export const listMaintenances = /* GraphQL */ `
+  query ListMaintenances(
+    $filter: TableMaintenanceFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMaintenances(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        description
-        createdAt
-        updatedAt
+        title
+        contents
+        maintenanceMessage
+        priority
+        completed
+        shipId
       }
       nextToken
     }

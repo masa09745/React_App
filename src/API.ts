@@ -2,21 +2,51 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateTodoInput = {
-  id?: string | null,
-  name: string,
-  description?: string | null,
+export type CreateMaintenanceInput = {
+  title?: string | null,
+  contents?: string | null,
+  maintenanceMessage?: string | null,
+  priority?: string | null,
+  completed?: boolean | null,
+  shipId?: number | null,
 };
 
-export type ModelTodoConditionInput = {
-  name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelTodoConditionInput | null > | null,
-  or?: Array< ModelTodoConditionInput | null > | null,
-  not?: ModelTodoConditionInput | null,
+export type Maintenance = {
+  __typename: "Maintenance",
+  id: string,
+  title?: string | null,
+  contents?: string | null,
+  maintenanceMessage?: string | null,
+  priority?: string | null,
+  completed?: boolean | null,
+  shipId?: number | null,
 };
 
-export type ModelStringInput = {
+export type UpdateMaintenanceInput = {
+  id: string,
+  title?: string | null,
+  contents?: string | null,
+  maintenanceMessage?: string | null,
+  priority?: string | null,
+  completed?: boolean | null,
+  shipId?: number | null,
+};
+
+export type DeleteMaintenanceInput = {
+  id: string,
+};
+
+export type TableMaintenanceFilterInput = {
+  id?: TableIDFilterInput | null,
+  title?: TableStringFilterInput | null,
+  contents?: TableStringFilterInput | null,
+  maintenanceMessage?: TableStringFilterInput | null,
+  priority?: TableStringFilterInput | null,
+  completed?: TableBooleanFilterInput | null,
+  shipId?: TableIntFilterInput | null,
+};
+
+export type TableIDFilterInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -27,198 +57,194 @@ export type ModelStringInput = {
   notContains?: string | null,
   between?: Array< string | null > | null,
   beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null",
-}
+export type TableStringFilterInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
 
+export type TableBooleanFilterInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+};
 
-export type ModelSizeInput = {
+export type TableIntFilterInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
   lt?: number | null,
   ge?: number | null,
   gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
   between?: Array< number | null > | null,
 };
 
-export type Todo = {
-  __typename: "Todo",
-  id: string,
-  name: string,
-  description?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateTodoInput = {
-  id: string,
-  name?: string | null,
-  description?: string | null,
-};
-
-export type DeleteTodoInput = {
-  id: string,
-};
-
-export type ModelTodoFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelTodoFilterInput | null > | null,
-  or?: Array< ModelTodoFilterInput | null > | null,
-  not?: ModelTodoFilterInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
-export type ModelTodoConnection = {
-  __typename: "ModelTodoConnection",
-  items:  Array<Todo | null >,
+export type MaintenanceConnection = {
+  __typename: "MaintenanceConnection",
+  items?:  Array<Maintenance | null > | null,
   nextToken?: string | null,
 };
 
-export type CreateTodoMutationVariables = {
-  input: CreateTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type CreateMaintenanceMutationVariables = {
+  input: CreateMaintenanceInput,
 };
 
-export type CreateTodoMutation = {
-  createTodo?:  {
-    __typename: "Todo",
+export type CreateMaintenanceMutation = {
+  createMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };
 
-export type UpdateTodoMutationVariables = {
-  input: UpdateTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type UpdateMaintenanceMutationVariables = {
+  input: UpdateMaintenanceInput,
 };
 
-export type UpdateTodoMutation = {
-  updateTodo?:  {
-    __typename: "Todo",
+export type UpdateMaintenanceMutation = {
+  updateMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };
 
-export type DeleteTodoMutationVariables = {
-  input: DeleteTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type DeleteMaintenanceMutationVariables = {
+  input: DeleteMaintenanceInput,
 };
 
-export type DeleteTodoMutation = {
-  deleteTodo?:  {
-    __typename: "Todo",
+export type DeleteMaintenanceMutation = {
+  deleteMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };
 
-export type GetTodoQueryVariables = {
+export type GetMaintenanceQueryVariables = {
   id: string,
 };
 
-export type GetTodoQuery = {
-  getTodo?:  {
-    __typename: "Todo",
+export type GetMaintenanceQuery = {
+  getMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };
 
-export type ListTodosQueryVariables = {
-  filter?: ModelTodoFilterInput | null,
+export type ListMaintenancesQueryVariables = {
+  filter?: TableMaintenanceFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListTodosQuery = {
-  listTodos?:  {
-    __typename: "ModelTodoConnection",
-    items:  Array< {
-      __typename: "Todo",
+export type ListMaintenancesQuery = {
+  listMaintenances?:  {
+    __typename: "MaintenanceConnection",
+    items?:  Array< {
+      __typename: "Maintenance",
       id: string,
-      name: string,
-      description?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
+      title?: string | null,
+      contents?: string | null,
+      maintenanceMessage?: string | null,
+      priority?: string | null,
+      completed?: boolean | null,
+      shipId?: number | null,
+    } | null > | null,
     nextToken?: string | null,
   } | null,
 };
 
-export type OnCreateTodoSubscription = {
-  onCreateTodo?:  {
-    __typename: "Todo",
+export type OnCreateMaintenanceSubscriptionVariables = {
+  id?: string | null,
+  title?: string | null,
+  contents?: string | null,
+  maintenanceMessage?: string | null,
+  priority?: string | null,
+};
+
+export type OnCreateMaintenanceSubscription = {
+  onCreateMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };
 
-export type OnUpdateTodoSubscription = {
-  onUpdateTodo?:  {
-    __typename: "Todo",
+export type OnUpdateMaintenanceSubscriptionVariables = {
+  id?: string | null,
+  title?: string | null,
+  contents?: string | null,
+  maintenanceMessage?: string | null,
+  priority?: string | null,
+};
+
+export type OnUpdateMaintenanceSubscription = {
+  onUpdateMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };
 
-export type OnDeleteTodoSubscription = {
-  onDeleteTodo?:  {
-    __typename: "Todo",
+export type OnDeleteMaintenanceSubscriptionVariables = {
+  id?: string | null,
+  title?: string | null,
+  contents?: string | null,
+  maintenanceMessage?: string | null,
+  priority?: string | null,
+};
+
+export type OnDeleteMaintenanceSubscription = {
+  onDeleteMaintenance?:  {
+    __typename: "Maintenance",
     id: string,
-    name: string,
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
+    title?: string | null,
+    contents?: string | null,
+    maintenanceMessage?: string | null,
+    priority?: string | null,
+    completed?: boolean | null,
+    shipId?: number | null,
   } | null,
 };

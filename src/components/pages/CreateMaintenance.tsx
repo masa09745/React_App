@@ -181,11 +181,9 @@ export const CreateMaintenance = () => {
                   }
                 />
               </Grid>
-              <Grid>
-                <Button type="submit" variant="contained" >送信</Button>
-              </Grid>
             </Grid>
           </Box>
+          <Button type="submit" variant="contained" >送信</Button>
         </Box>
       </Box>
     </>

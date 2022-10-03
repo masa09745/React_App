@@ -1,5 +1,5 @@
 projects:
-  AirLine Manage App:
+  React App API:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.ts
@@ -11,19 +11,8 @@ projects:
         generatedFileName: src/API.ts
         docsFilePath: src/graphql
         region: ap-northeast-1
-        apiId: gpldozby75h7hcpig7imbn7eyi
+        apiId: wxsptsjbxjfudlrqfsrqwyhnnq
         maxDepth: 2
-  reactapp:
-    schemaPath: src/graphql/schema.json
-    includes:
-      - ''
-    excludes:
-      - ./amplify/**
-    extensions:
-      amplify:
-        codeGenTarget: typescript
-        generatedFileName: src/API.ts
-        docsFilePath: .
 extensions:
   amplify:
     version: 3
