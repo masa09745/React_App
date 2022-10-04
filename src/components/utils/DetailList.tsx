@@ -20,6 +20,7 @@ import { deleteMaintenance } from "graphql/mutations"
 import { Maintenance } from "API"
 import { Amplify, API, graphqlOperation } from "aws-amplify"
 
+import { EditModal } from "components/utils/EditModal"
 import { ShowModal } from "components/utils/ShowModal"
 
 
@@ -42,6 +43,11 @@ export const DetailList = (props:props) => {
   const handleShow =(data: Maintenance) =>{
     setMaintenance(data)
     setModalOpen(true)
+  }
+
+  const handleEdit = (data:Maintenance) => {
+    setMaintenance(data)
+    setOpen(true)
   }
 
   const handleDelete = async (id:string) => {
@@ -70,6 +76,7 @@ export const DetailList = (props:props) => {
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={maintenance.id} >
                   <TableCell sx={{minWidth:150}}>
                     <VisibilityIcon sx={{mr:1}} onClick={()=>handleShow(maintenance)} />
+                    <EditIcon sx={{mr:1}} onClick={()=>handleEdit(maintenance)} />
                     <DeleteIcon onClick={()=>handleDelete(maintenance.id)} />
                   </TableCell>
                   <TableCell sx={{minWidth:350}} > {maintenance.title} </TableCell>
@@ -83,6 +90,7 @@ export const DetailList = (props:props) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <EditModal open={open} setOpen={setOpen} maintenance={maintenance}/>
       <ShowModal modalOpen={modalOpen} setModalOpen={setModalOpen} maintenance={maintenance}/>
     </>
   )
