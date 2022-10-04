@@ -15,6 +15,12 @@ import type { InputMaintenance } from "Types/maintenance"
 
 import {useNavigate, useLocation, Link} from "react-router-dom"
 
+import { createMaintenance } from "graphql/mutations"
+import { Amplify, API, graphqlOperation } from "aws-amplify"
+
+import { CreateMaintenanceInput } from "API"
+
+
 
 
 
@@ -32,10 +38,10 @@ export const CreateMaintenance = () => {
 
   const navigate = useNavigate()
 
-  const defaultValues: DefaultValues<InputMaintenance> = {
+  const defaultValues: DefaultValues<CreateMaintenanceInput> = {
     title: "",
     ata:"",
-    description: "",
+    contents: "",
     maintenanceMessage: "",
     priority: "",
     completed: false,
@@ -49,7 +55,7 @@ export const CreateMaintenance = () => {
     formState,
     formState:{isSubmitSuccessful},
     handleSubmit,
-  } = useForm<InputMaintenance>({defaultValues});
+  } = useForm<CreateMaintenanceInput>({defaultValues});
 
   const validationRoles = {
     title: {
@@ -66,8 +72,17 @@ export const CreateMaintenance = () => {
     }
   }
 
-  const onSubmit = async (inputData: InputMaintenance) => {
+  const onSubmit = async (input: CreateMaintenanceInput) => {
+
+    try{
+      await API.graphql(graphqlOperation(createMaintenance, { input }))
+      navigate("/ships")
+
+      }catch(err) {
+        console.log(err)
+      }
   }
+
 
 
   useEffect (() => {
@@ -123,6 +138,20 @@ export const CreateMaintenance = () => {
                   )}
                 />
               </Grid>
+              <Grid item xs={3} hidden>
+                <label>shipId</label>
+                <Controller
+                  name="shipId"
+                  control={control}
+                  render={({ field }) =>(
+                    <TextField
+                      fullWidth
+                      {...field}
+                      type="text"
+                    />
+                  )}
+                />
+              </Grid>
               <Grid item xs={5}>
                 <label>MaintenanceMessage</label>
                 <Controller
@@ -152,7 +181,7 @@ export const CreateMaintenance = () => {
               <Grid item xs={12}>
                 <label>内容</label>
                 <Controller
-                  name="description"
+                  name="contents"
                   control={control}
                   rules={validationRoles.description}
 
@@ -182,8 +211,8 @@ export const CreateMaintenance = () => {
                 />
               </Grid>
             </Grid>
+            <Button type="submit" variant="contained" >送信</Button>
           </Box>
-          <Button type="submit" variant="contained" >送信</Button>
         </Box>
       </Box>
     </>
