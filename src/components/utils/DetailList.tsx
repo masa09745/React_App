@@ -19,6 +19,8 @@ import {useNavigate} from "react-router-dom"
 
 import { Maintenance } from "API"
 
+import { ShowModal } from "components/utils/ShowModal"
+
 
 
 
@@ -45,6 +47,7 @@ export const DetailList = (props:props) => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell >Action</TableCell>
               <TableCell >Title</TableCell>
               <TableCell >Description</TableCell>
               <TableCell align='center'>ATA</TableCell>
@@ -56,6 +59,9 @@ export const DetailList = (props:props) => {
             {maintenances.map((maintenance) =>{
               return(
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={maintenance.id} >
+                  <TableCell sx={{minWidth:150}}>
+                    <VisibilityIcon sx={{mr:1}} onClick={()=>handleShow(maintenance)} />
+                  </TableCell>
                   <TableCell sx={{minWidth:350}} > {maintenance.title} </TableCell>
                   <TableCell sx={{minWidth:350, whiteSpace:'normal', wordWrap: 'break-word'}} > {maintenance.contents} </TableCell>
                   <TableCell align='center'> {maintenance.ata} </TableCell>
@@ -67,6 +73,7 @@ export const DetailList = (props:props) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <ShowModal modalOpen={modalOpen} setModalOpen={setModalOpen} maintenance={maintenance}/>
     </>
   )
 }
