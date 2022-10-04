@@ -49,7 +49,7 @@ export const DetailList = (props:props) => {
             <TableRow>
               <TableCell >Action</TableCell>
               <TableCell >Title</TableCell>
-              <TableCell >Description</TableCell>
+              <TableCell >Contents</TableCell>
               <TableCell align='center'>ATA</TableCell>
               <TableCell align='center'>Priority</TableCell>
               <TableCell align='center'>Completed</TableCell>
