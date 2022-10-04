@@ -1,5 +1,11 @@
 import React, { memo, useState, useEffect, useContext } from "react"
 
+import { Amplify, API, graphqlOperation } from "aws-amplify"
+import { listMaintenances } from "graphql/queries"
+
+import awsExports from "aws-exports"
+
+
 import {
   Box,
   Typography,
@@ -14,12 +20,28 @@ type State = {
   selectShip: string | undefined
 }
 
+Amplify.configure(awsExports)
+
 export const ShipDetails = memo(() => {
   const location = useLocation()
   const {id, selectShip } = location.state as State
-
+  const [maintenances, setMaintenances] = useState([])
 
   console.log("ship detailのレンダリング")
+  console.log(maintenances)
+
+  useEffect(() => {
+    const fetchMaintenances = async() => {
+      try{
+        const maintenanceData: any = await API.graphql(graphqlOperation(listMaintenances))
+        const maintenances = maintenanceData.data.listMaintenances.items
+        setMaintenances(maintenances)
+      }catch(err){
+        console.log(err);
+      }
+    }
+    fetchMaintenances();
+  }, [])
 
   return(
     <>
