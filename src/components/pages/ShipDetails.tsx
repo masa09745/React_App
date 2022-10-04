@@ -4,6 +4,7 @@ import { Amplify, API, graphqlOperation } from "aws-amplify"
 import { listMaintenances } from "graphql/queries"
 
 import awsExports from "aws-exports"
+import type {MaintenanceData} from "Types/maintenance"
 
 
 import {
@@ -13,6 +14,10 @@ import {
 } from "@mui/material"
 
 import { useLocation, Link } from "react-router-dom"
+import { ListMaintenancesQuery, Maintenance } from "API"
+import { GraphQLResult } from '@aws-amplify/api';
+
+import { DetailList } from "components/utils/DetailList"
 
 
 type State = {
@@ -25,17 +30,20 @@ Amplify.configure(awsExports)
 export const ShipDetails = memo(() => {
   const location = useLocation()
   const {id, selectShip } = location.state as State
-  const [maintenances, setMaintenances] = useState([])
+  const [maintenances, setMaintenances] = useState<Maintenance[]>([])
 
   console.log("ship detailのレンダリング")
-  console.log(maintenances)
 
   useEffect(() => {
     const fetchMaintenances = async() => {
       try{
-        const maintenanceData: any = await API.graphql(graphqlOperation(listMaintenances))
-        const maintenances = maintenanceData.data.listMaintenances.items
-        setMaintenances(maintenances)
+        const res = (await API.graphql(
+          graphqlOperation(listMaintenances),
+          )) as GraphQLResult<ListMaintenancesQuery>;
+        if (res.data?.listMaintenances?.items){
+          const maintenancesData = res.data.listMaintenances.items as Maintenance[]
+          setMaintenances(maintenancesData)
+        }
       }catch(err){
         console.log(err);
       }
@@ -55,6 +63,7 @@ export const ShipDetails = memo(() => {
               <Button variant="contained">新規作成</Button>
              </Link>
         </Typography>
+        {maintenances.length === 0? <Box component="div" sx={{mt:1, px:1}}>整備情報はありません</Box>:<DetailList maintenances={maintenances} />}
       </Box>
     </>
   )
