@@ -16,10 +16,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import CheckIcon from '@mui/icons-material/Check';
 import {useNavigate} from "react-router-dom"
 
-
+import { deleteMaintenance } from "graphql/mutations"
 import { Maintenance } from "API"
+import { Amplify, API, graphqlOperation } from "aws-amplify"
 
 import { ShowModal } from "components/utils/ShowModal"
+
+
 
 
 
@@ -39,6 +42,12 @@ export const DetailList = (props:props) => {
   const handleShow =(data: Maintenance) =>{
     setMaintenance(data)
     setModalOpen(true)
+  }
+
+  const handleDelete = async (id:string) => {
+    const input = { id }
+    await API.graphql(graphqlOperation(deleteMaintenance,{input}))
+      navigate('/ships')
   }
 
   return(
@@ -61,6 +70,7 @@ export const DetailList = (props:props) => {
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={maintenance.id} >
                   <TableCell sx={{minWidth:150}}>
                     <VisibilityIcon sx={{mr:1}} onClick={()=>handleShow(maintenance)} />
+                    <DeleteIcon onClick={()=>handleDelete(maintenance.id)} />
                   </TableCell>
                   <TableCell sx={{minWidth:350}} > {maintenance.title} </TableCell>
                   <TableCell sx={{minWidth:350, whiteSpace:'normal', wordWrap: 'break-word'}} > {maintenance.contents} </TableCell>
