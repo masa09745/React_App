@@ -41,3 +41,36 @@ export const listMaintenances = /* GraphQL */ `
     }
   }
 `;
+export const maintenanceByShipId = /* GraphQL */ `
+  query MaintenanceByShipId(
+    $shipId: Int!
+    $updatedAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMaintenanceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    maintenanceByShipId(
+      shipId: $shipId
+      updatedAt: $updatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        contents
+        ata
+        maintenanceMessage
+        priority
+        completed
+        shipId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

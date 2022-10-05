@@ -36,7 +36,6 @@ export const EditModal = memo((props:Props) => {
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const navigate = useNavigate()
 
-  console.log(maintenance?.id)
   const handleClose = () =>{
     reset()
     setOpen(false)

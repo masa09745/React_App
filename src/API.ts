@@ -3,6 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateMaintenanceInput = {
+  id?: string | null,
   title: string,
   contents: string,
   ata: string,
@@ -10,6 +11,8 @@ export type CreateMaintenanceInput = {
   priority: string,
   completed: boolean,
   shipId: number,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type ModelMaintenanceConditionInput = {
@@ -96,8 +99,8 @@ export type Maintenance = {
   priority: string,
   completed: boolean,
   shipId: number,
-  createdAt?: string | null,
-  updatedAt?: string | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateMaintenanceInput = {
@@ -155,6 +158,22 @@ export type ModelMaintenanceConnection = {
   nextToken?: string | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateMaintenanceMutationVariables = {
   input: CreateMaintenanceInput,
   condition?: ModelMaintenanceConditionInput | null,
@@ -171,8 +190,8 @@ export type CreateMaintenanceMutation = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -192,8 +211,8 @@ export type UpdateMaintenanceMutation = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -213,8 +232,8 @@ export type DeleteMaintenanceMutation = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -233,8 +252,8 @@ export type GetMaintenanceQuery = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -257,8 +276,37 @@ export type ListMaintenancesQuery = {
       priority: string,
       completed: boolean,
       shipId: number,
-      createdAt?: string | null,
-      updatedAt?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type MaintenanceByShipIdQueryVariables = {
+  shipId: number,
+  updatedAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelMaintenanceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MaintenanceByShipIdQuery = {
+  maintenanceByShipId?:  {
+    __typename: "ModelMaintenanceConnection",
+    items:  Array< {
+      __typename: "Maintenance",
+      id: string,
+      title: string,
+      contents: string,
+      ata: string,
+      maintenanceMessage: string,
+      priority: string,
+      completed: boolean,
+      shipId: number,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -275,8 +323,8 @@ export type OnCreateMaintenanceSubscription = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -291,8 +339,8 @@ export type OnUpdateMaintenanceSubscription = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -307,7 +355,7 @@ export type OnDeleteMaintenanceSubscription = {
     priority: string,
     completed: boolean,
     shipId: number,
-    createdAt?: string | null,
-    updatedAt?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
