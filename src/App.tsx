@@ -9,9 +9,12 @@ import { Ships } from "components/pages/Ships"
 import { ShipDetails } from "components/pages/ShipDetails"
 import { CreateMaintenance } from "components/pages/CreateMaintenance"
 
-export const App: React.FC = () =>  {
+import { useAuthenticator } from "@aws-amplify/ui-react"
+import { Authenticator } from "@aws-amplify/ui-react"
 
-  return (
+export const App: React.FC = () =>  {
+  const { route } = useAuthenticator((context) => [context.route])
+  return route === 'authenticated' ? (
     <BrowserRouter>
       <CommonLayout>
         <Routes>
@@ -23,6 +26,12 @@ export const App: React.FC = () =>  {
           </Route>
           <Route  path="/" element={ <Home /> }/>
         </Routes>
+      </CommonLayout>
+    </BrowserRouter>
+  ):(
+    <BrowserRouter>
+      <CommonLayout>
+        <Authenticator />
       </CommonLayout>
     </BrowserRouter>
   )

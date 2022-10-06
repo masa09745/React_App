@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react'
 
+import { useAuthenticator } from '@aws-amplify/ui-react'
+
 
 export const Home = () => {
-  const [maintenances, setMaintenances] = useState([])
+  const { user , signOut} = useAuthenticator((context)=> [context.user]) 
 
 
   return(
     <>
-      Homeページ
+      Homeページ {user.username}
+
+      <button onClick={signOut}>SignOut</button>
     </>
   )
 }
