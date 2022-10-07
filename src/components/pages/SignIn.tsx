@@ -1,7 +1,9 @@
+import { Authenticator, } from "@aws-amplify/ui-react"
+
 export const SignIn = () => {
 
   return (
-    <>SignInページ</>
+    <Authenticator hideSignUp={true}></Authenticator>
   )
 
 }
