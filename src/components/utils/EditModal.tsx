@@ -1,53 +1,47 @@
-import React, { useContext, useEffect, } from'react';
+import React, { useState, useContext, useEffect, memo } from'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import Modal from '@mui/material/Modal';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel  from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
 
+
 import { useForm, Controller } from "react-hook-form"
 
 import type { DefaultValues } from "react-hook-form"
-import type { InputMaintenance } from "Types/maintenance"
 
-import {useNavigate, useLocation, Link} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 
-import { createMaintenance } from "graphql/mutations"
+import { UpdateMaintenanceInput } from "API"
+import { updateMaintenance } from "graphql/mutations"
+
 import { Amplify, API, graphqlOperation } from "aws-amplify"
 
-import { CreateMaintenanceInput } from "API"
 
 
 
-
-
-type State = {
-  id: number | undefined,
-  selectShip: string | undefined
+type Props = {
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  maintenance?: UpdateMaintenanceInput
 }
 
 
-export const CreateMaintenance = () => {
-  const location = useLocation()
-  const { id, selectShip } = location.state as State
 
-  console.log(id)
-
+export const EditModal = memo((props:Props) => {
+  const {open, setOpen, maintenance} = props
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const navigate = useNavigate()
 
-  const defaultValues: DefaultValues<CreateMaintenanceInput> = {
-    title: "",
-    ata:"",
-    contents: "",
-    maintenanceMessage: "",
-    priority: "",
-    completed: false,
-    shipId: id,
+  const handleClose = () =>{
+    reset()
+    setOpen(false)
   }
 
+  console.log('Modalのレンダリング')
 
   const {
     control,
@@ -55,7 +49,7 @@ export const CreateMaintenance = () => {
     formState,
     formState:{isSubmitSuccessful},
     handleSubmit,
-  } = useForm<CreateMaintenanceInput>({defaultValues});
+  } = useForm<UpdateMaintenanceInput>();
 
   const validationRoles = {
     title: {
@@ -68,22 +62,9 @@ export const CreateMaintenance = () => {
       required: "入力必須です"
     },
     priority: {
-      validate: (value: string | '') => value !== '' || '入力必須です'
+      validate: (value: string |undefined| '') => value !== '' || '入力必須です'
     }
   }
-
-  const onSubmit = async (input: CreateMaintenanceInput) => {
-
-    try{
-      await API.graphql(graphqlOperation(createMaintenance, { input }))
-      navigate("/ships")
-
-      }catch(err) {
-        console.log(err)
-      }
-  }
-
-
 
   useEffect (() => {
     if(formState.isSubmitSuccessful) {
@@ -91,25 +72,47 @@ export const CreateMaintenance = () => {
     }
   }, [formState, isSubmitSuccessful, reset])
 
+  const handleUpdate = async (id?: string, data?: UpdateMaintenanceInput) => {
+    try {
+      const input = {id, data}
+      await API.graphql(graphqlOperation(updateMaintenance,{ input }))
+      console.log('update Success')
+      navigate("/ships")
+    }catch(err) {
+      console.log(err)
+    }
+  }
 
-  return(
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 700,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
+
+  return (
     <>
-      <Box sx={{ width: 900 }}>
-        <Typography variant="h5" component="h5" sx={{mb:1}}>機材情報作成フォーム</Typography>
-        <Link to={`/ships/${id}`} state={{id: id, selectShip: selectShip}}>
-          <Button variant="contained">機材情報一覧</Button>
-        </Link>
-        <Box sx={{ width:750, mx:"auto", p:1}}>
-          <Typography variant="h5" component="h1">
-            選択中の機番: {selectShip}
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)}  >
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box component="form" id="modal-modal-description" >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <label>タイトル</label>
                 <Controller
                   name="title"
                   control={control}
+                  defaultValue={maintenance?.title}
                   rules={validationRoles.title}
                   render={({ field, fieldState }) =>(
                     <TextField
@@ -126,8 +129,8 @@ export const CreateMaintenance = () => {
                 <Controller
                   name="ata"
                   control={control}
+                  defaultValue={maintenance?.ata}
                   rules={validationRoles.ATA}
-
                   render={({ field, fieldState}) =>(
                     <TextField
                       fullWidth
@@ -138,25 +141,12 @@ export const CreateMaintenance = () => {
                   )}
                 />
               </Grid>
-              <Grid item xs={3} hidden>
-                <label>shipId</label>
-                <Controller
-                  name="shipId"
-                  control={control}
-                  render={({ field }) =>(
-                    <TextField
-                      fullWidth
-                      {...field}
-                      type="text"
-                    />
-                  )}
-                />
-              </Grid>
               <Grid item xs={5}>
                 <label>MaintenanceMessage</label>
                 <Controller
                   name="maintenanceMessage"
                   control={control}
+                  defaultValue={maintenance?.maintenanceMessage}
                   render={({ field }) => <TextField fullWidth {...field} />}
                 />
               </Grid>
@@ -165,8 +155,7 @@ export const CreateMaintenance = () => {
                 <Controller
                   name="priority"
                   control={control}
-                  rules={validationRoles.priority}
-
+                  defaultValue={maintenance?.priority}
                   render={({ field, fieldState }) => (
                   <TextField select fullWidth {...field} type="number" helperText={fieldState.error?.message} >
                       <MenuItem value={""}></MenuItem>
@@ -182,8 +171,8 @@ export const CreateMaintenance = () => {
                 <Controller
                   name="contents"
                   control={control}
+                  defaultValue={maintenance?.contents}
                   rules={validationRoles.description}
-
                   render={({ field, fieldState }) =>(
                     <TextField
                       {...field}
@@ -197,24 +186,24 @@ export const CreateMaintenance = () => {
                   )}
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={6}>
                 <Controller
                   name="completed"
                   control={control}
+                  defaultValue={ maintenance?.completed }
                   render={({ field }) =>
                     <FormControlLabel
-                      control={ <Checkbox {...field} />}
+                      control={ <Checkbox {...field}  />}
                       label="完了"
                     />
                   }
                 />
               </Grid>
             </Grid>
-            <Button type="submit" variant="contained" >送信</Button>
+            <Button type="submit" onClick={()=>handleUpdate(maintenance?.id, maintenance)}>更新</Button>
           </Box>
         </Box>
-      </Box>
+      </Modal>
     </>
-  )
-
-}
+  );
+})

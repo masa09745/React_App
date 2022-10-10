@@ -1,11 +1,16 @@
 import { createRoot } from 'react-dom/client'
+import { Authenticator,View } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css'
 import './index.css';
 import  { App } from './App';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
-    <App />
+    <Authenticator.Provider>
+    	<View><App /></View>
+    </Authenticator.Provider>
+
  );
 
 // If you want to start measuring performance in your app, pass a function

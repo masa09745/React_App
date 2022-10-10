@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { styled } from '@mui/material/styles';
 import { useNavigate, Link } from "react-router-dom"
 
+import { useAuthenticator } from "@aws-amplify/ui-react"
 
 import MUIAppBar, {AppBarProps as MUIAppBarProps} from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
@@ -72,6 +73,7 @@ const Main = styled('main', {
   }));
 
 export const CommonLayout = ({ children }: CommonLayoutProps) => {
+  const { route,signOut } = useAuthenticator((context) => [context.route, context.signOut]);
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -81,6 +83,24 @@ export const CommonLayout = ({ children }: CommonLayoutProps) => {
   };
 
   const navigate = useNavigate()
+
+
+  const logOut =  async(e: React.MouseEvent<HTMLButtonElement>) => {
+    signOut();
+    navigate('/auth');
+  }
+
+  const AuthButtons = () => {
+    if(route === "authenticated") {
+      return (
+        <Button color="inherit" onClick={logOut}>サインアウト</Button>
+      )
+    }else {
+      return (
+        <Button component={Link} to="/auth" color="inherit">サインイン</Button>
+      )
+    }
+  }
 
 
   return (
@@ -106,6 +126,7 @@ export const CommonLayout = ({ children }: CommonLayoutProps) => {
           <Typography component={Link} to="/" sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }} variant="h6">
             AirLine Management System
           </Typography>
+          <AuthButtons />
         </Toolbar>
       </AppBar>
       <Drawer
