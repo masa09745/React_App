@@ -1,10 +1,9 @@
 import { Authenticator, useAuthenticator, } from "@aws-amplify/ui-react"
 import { useEffect } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-export const SignIn = () => {
+export const Auth = () => {
   const { route } = useAuthenticator((context) => [context.route])
-  const location = useLocation()
   const navigate = useNavigate()
 
   useEffect (() => {
@@ -14,7 +13,7 @@ export const SignIn = () => {
   }, [route, navigate])
 
   return (
-    <Authenticator hideSignUp={true}></Authenticator>
+    <Authenticator></Authenticator>
   )
 
 }

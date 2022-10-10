@@ -87,7 +87,7 @@ export const CommonLayout = ({ children }: CommonLayoutProps) => {
 
   const logOut =  async(e: React.MouseEvent<HTMLButtonElement>) => {
     signOut();
-    navigate('/signin');
+    navigate('/auth');
   }
 
   const AuthButtons = () => {
@@ -97,7 +97,7 @@ export const CommonLayout = ({ children }: CommonLayoutProps) => {
       )
     }else {
       return (
-        <Button component={Link} to="/signin" color="inherit">サインイン</Button>
+        <Button component={Link} to="/auth" color="inherit">サインイン</Button>
       )
     }
   }
