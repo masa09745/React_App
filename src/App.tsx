@@ -1,4 +1,4 @@
-import React, { useContext }  from "react"
+import React from "react"
 import { BrowserRouter, Routes, Route, Navigate }  from "react-router-dom"
 
 import { CommonLayout } from "components/layouts/CommonLayout"
@@ -9,11 +9,8 @@ import { ShipDetails } from "components/pages/ShipDetails"
 import { CreateMaintenance } from "components/pages/CreateMaintenance"
 
 import { useAuthenticator } from "@aws-amplify/ui-react"
-import { Authenticator, } from "@aws-amplify/ui-react"
-import { RemoveRoadOutlined } from "@mui/icons-material"
 
 import {Amplify} from 'aws-amplify';
-import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import awsconfig from './aws-exports';
 
 Amplify.configure(awsconfig);
@@ -38,7 +35,7 @@ export const App: React.FC = () =>  {
             <Route path=":shipId" element={<ShipDetails />}/>
             <Route path=":shipId/create" element={<CreateMaintenance />} />
           </Route>
-          <Route  path="/" element={<Home />}/>
+          <Route  path="/" element={<Private><Home/></Private>}/>
         </Routes>
       </CommonLayout>
     </BrowserRouter>
