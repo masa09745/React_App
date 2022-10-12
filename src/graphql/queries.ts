@@ -13,6 +13,7 @@ export const getMaintenance = /* GraphQL */ `
       priority
       completed
       shipId
+      userName
       createdAt
       updatedAt
     }
@@ -34,6 +35,7 @@ export const listMaintenances = /* GraphQL */ `
         priority
         completed
         shipId
+        userName
         createdAt
         updatedAt
       }
@@ -67,6 +69,41 @@ export const maintenanceByShipId = /* GraphQL */ `
         priority
         completed
         shipId
+        userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const maintenanceByUserName = /* GraphQL */ `
+  query MaintenanceByUserName(
+    $userName: String!
+    $updatedAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMaintenanceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    maintenanceByUserName(
+      userName: $userName
+      updatedAt: $updatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        contents
+        ata
+        maintenanceMessage
+        priority
+        completed
+        shipId
+        userName
         createdAt
         updatedAt
       }

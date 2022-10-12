@@ -28,12 +28,11 @@ type props = {
 
 export const ShipList = memo((props:props) => {
   const {ships} = props
-  console.log("ship listのレンダリング")
 
   return(
     <>
       <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: '100%', maxWidth: 350, bgcolor: 'background.paper' }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={

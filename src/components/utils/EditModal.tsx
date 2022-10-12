@@ -41,8 +41,6 @@ export const EditModal = memo((props:Props) => {
     setOpen(false)
   }
 
-  console.log('Modalのレンダリング')
-
   const {
     control,
     reset,

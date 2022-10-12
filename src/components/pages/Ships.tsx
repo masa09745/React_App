@@ -5,11 +5,12 @@ import { Outlet } from "react-router-dom"
 
 import { ShipList } from "components/utils/ShipList"
 
+import { useAuthenticator } from "@aws-amplify/ui-react"
+
 import { ships } from "Data/ships"
 
 export const Ships = memo(() => {
-
-  console.log("shipのレンダリング")
+  const{ user } = useAuthenticator((context) => [context.user])
 
   return(
     <>

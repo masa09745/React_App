@@ -11,7 +11,7 @@ import { CreateMaintenance } from "components/pages/CreateMaintenance"
 import { useAuthenticator } from "@aws-amplify/ui-react"
 
 import {Amplify} from 'aws-amplify';
-import awsconfig from './aws-exports';
+import awsconfig from 'aws-exports';
 
 Amplify.configure(awsconfig);
 

@@ -19,6 +19,8 @@ import {useNavigate} from "react-router-dom"
 import { deleteMaintenance } from "graphql/mutations"
 import { Maintenance } from "API"
 import { Amplify, API, graphqlOperation } from "aws-amplify"
+import { useAuthenticator } from "@aws-amplify/ui-react"
+
 
 import { EditModal } from "components/utils/EditModal"
 import { ShowModal } from "components/utils/ShowModal"
@@ -35,6 +37,7 @@ type props = {
 
 export const DetailList = (props:props) => {
   const {maintenances} = props
+  const { user } = useAuthenticator((context) => [context.user])
   const [open, setOpen] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [maintenance, setMaintenance] = useState<Maintenance>()
@@ -58,7 +61,7 @@ export const DetailList = (props:props) => {
 
   return(
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{mt:5}} >
         <Table>
           <TableHead>
             <TableRow>
@@ -76,11 +79,11 @@ export const DetailList = (props:props) => {
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={maintenance.id} >
                   <TableCell sx={{minWidth:150}}>
                     <VisibilityIcon sx={{mr:1}} onClick={()=>handleShow(maintenance)} />
-                    <EditIcon sx={{mr:1}} onClick={()=>handleEdit(maintenance)} />
-                    <DeleteIcon onClick={()=>handleDelete(maintenance.id)} />
+                    {user.username === maintenance.userName ? <EditIcon sx={{mr:1}} onClick={()=>handleEdit(maintenance)} /> : <></> }
+                    {user.username === maintenance.userName ? <DeleteIcon onClick={()=>handleDelete(maintenance.id)} /> : <></> }
                   </TableCell>
-                  <TableCell sx={{minWidth:350}} > {maintenance.title} </TableCell>
-                  <TableCell sx={{minWidth:350, whiteSpace:'normal', wordWrap: 'break-word'}} > {maintenance.contents} </TableCell>
+                  <TableCell sx={{minWidth:200}} > {maintenance.title} </TableCell>
+                  <TableCell sx={{minWidth:300, whiteSpace:'normal', wordWrap: 'break-word'}} > {maintenance.contents} </TableCell>
                   <TableCell align='center'> {maintenance.ata} </TableCell>
                   <TableCell align='center'> {maintenance.priority} </TableCell>
                   { maintenance.completed === true? <TableCell align='center'><CheckIcon /></TableCell> : <TableCell></TableCell>}

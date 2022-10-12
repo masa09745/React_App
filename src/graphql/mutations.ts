@@ -16,6 +16,7 @@ export const createMaintenance = /* GraphQL */ `
       priority
       completed
       shipId
+      userName
       createdAt
       updatedAt
     }
@@ -35,6 +36,7 @@ export const updateMaintenance = /* GraphQL */ `
       priority
       completed
       shipId
+      userName
       createdAt
       updatedAt
     }
@@ -54,6 +56,7 @@ export const deleteMaintenance = /* GraphQL */ `
       priority
       completed
       shipId
+      userName
       createdAt
       updatedAt
     }

@@ -11,16 +11,16 @@ import MenuItem from '@mui/material/MenuItem';
 import { useForm, Controller } from "react-hook-form"
 
 import type { DefaultValues } from "react-hook-form"
-import type { InputMaintenance } from "Types/maintenance"
 
 import {useNavigate, useLocation, Link} from "react-router-dom"
 
 import { createMaintenance } from "graphql/mutations"
 import { Amplify, API, graphqlOperation } from "aws-amplify"
-
+import { useAuthenticator } from "@aws-amplify/ui-react"
 import { CreateMaintenanceInput } from "API"
+import awsconfig from 'aws-exports';
 
-
+Amplify.configure(awsconfig);
 
 
 
@@ -33,8 +33,7 @@ type State = {
 export const CreateMaintenance = () => {
   const location = useLocation()
   const { id, selectShip } = location.state as State
-
-  console.log(id)
+  const{ user } = useAuthenticator((context) => [context.user])
 
   const navigate = useNavigate()
 
@@ -46,6 +45,7 @@ export const CreateMaintenance = () => {
     priority: "",
     completed: false,
     shipId: id,
+    userName: user.username,
   }
 
 

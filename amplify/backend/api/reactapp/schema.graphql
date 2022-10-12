@@ -12,6 +12,7 @@ type Maintenance @model
     priority: String!
     completed: Boolean!
     shipId: Int! @index(name: "byShipId", queryField: "maintenanceByShipId", sortKeyFields: ["updatedAt"] )
+    userName: String! @index(name: "byUserName", queryField: "maintenanceByUserName", sortKeyFields: ["updatedAt"] )
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
   }
