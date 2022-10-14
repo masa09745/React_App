@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CheckIcon from '@mui/icons-material/Check';
-import {useNavigate} from "react-router-dom"
+import {useNavigate, Link} from "react-router-dom"
 
 import { deleteMaintenance } from "graphql/mutations"
 import { Maintenance } from "API"
@@ -48,11 +48,6 @@ export const DetailList = (props:props) => {
     setModalOpen(true)
   }
 
-  const handleEdit = (data:Maintenance) => {
-    setMaintenance(data)
-    setOpen(true)
-  }
-
   const handleDelete = async (id:string) => {
     const input = { id }
     await API.graphql(graphqlOperation(deleteMaintenance,{input}))
@@ -79,7 +74,7 @@ export const DetailList = (props:props) => {
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={maintenance.id} >
                   <TableCell sx={{minWidth:150}}>
                     <VisibilityIcon sx={{mr:1}} onClick={()=>handleShow(maintenance)} />
-                    {user.username === maintenance.userName ? <EditIcon sx={{mr:1}} onClick={()=>handleEdit(maintenance)} /> : <></> }
+                    {user.username === maintenance.userName ? <Link to={`${maintenance.id}/edit`}><EditIcon sx={{mr:1}}/></Link> : <></> }
                     {user.username === maintenance.userName ? <DeleteIcon onClick={()=>handleDelete(maintenance.id)} /> : <></> }
                   </TableCell>
                   <TableCell sx={{minWidth:200}} > {maintenance.title} </TableCell>

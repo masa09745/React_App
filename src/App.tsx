@@ -7,6 +7,7 @@ import { Auth } from "components/pages/Auth"
 import { Ships } from "components/pages/Ships"
 import { ShipDetails } from "components/pages/ShipDetails"
 import { CreateMaintenance } from "components/pages/CreateMaintenance"
+import { EditMaintenance } from "components/pages/EditMaintenance"
 
 import { useAuthenticator } from "@aws-amplify/ui-react"
 
@@ -34,6 +35,7 @@ export const App: React.FC = () =>  {
           <Route path="/ships" element={<Private><Ships/></Private>}>
             <Route path=":shipId" element={<ShipDetails />}/>
             <Route path=":shipId/create" element={<CreateMaintenance />} />
+            <Route path=":shipId/:id/edit" element={<EditMaintenance />} />
           </Route>
           <Route  path="/" element={<Private><Home/></Private>}/>
         </Routes>
