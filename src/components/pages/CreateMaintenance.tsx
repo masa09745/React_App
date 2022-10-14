@@ -166,7 +166,6 @@ export const CreateMaintenance = () => {
                   name="priority"
                   control={control}
                   rules={validationRoles.priority}
-
                   render={({ field, fieldState }) => (
                   <TextField select fullWidth {...field} type="number" helperText={fieldState.error?.message} >
                       <MenuItem value={""}></MenuItem>

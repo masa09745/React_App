@@ -74,7 +74,7 @@ export const DetailList = (props:props) => {
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={maintenance.id} >
                   <TableCell sx={{minWidth:150}}>
                     <VisibilityIcon sx={{mr:1}} onClick={()=>handleShow(maintenance)} />
-                    {user.username === maintenance.userName ? <Link to={`${maintenance.id}/edit`}><EditIcon sx={{mr:1}}/></Link> : <></> }
+                    {user.username === maintenance.userName ? <Link to={`${maintenance.id}/edit`} state={{maintenance:maintenance}}><EditIcon sx={{mr:1}}/></Link> : <></> }
                     {user.username === maintenance.userName ? <DeleteIcon onClick={()=>handleDelete(maintenance.id)} /> : <></> }
                   </TableCell>
                   <TableCell sx={{minWidth:200}} > {maintenance.title} </TableCell>
