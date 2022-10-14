@@ -16,18 +16,15 @@ import type { DefaultValues } from "react-hook-form"
 
 import {useNavigate, useLocation, Link} from "react-router-dom"
 
-import { createMaintenance } from "graphql/mutations"
+import { updateMaintenance } from "graphql/mutations"
 import { Amplify, API, graphqlOperation } from "aws-amplify"
 import { useAuthenticator } from "@aws-amplify/ui-react"
 import { UpdateMaintenanceInput } from "API"
 
-import { Maintenance, GetMaintenanceQuery } from "API"
-import { GraphQLResult } from '@aws-amplify/api';
-import { getMaintenance } from "graphql/queries"
-
+import { Maintenance } from "API"
 
 import awsconfig from 'aws-exports';
-import { FormHelperText, InputLabel } from '@mui/material';
+
 
 Amplify.configure(awsconfig);
 
@@ -48,6 +45,7 @@ export const EditMaintenance = () => {
 
   const defaultValues: DefaultValues<Maintenance> = useMemo(() => {
     return {
+      id: maintenance?.id,
       title: maintenance?.title,
       ata: maintenance?.ata,
       contents: maintenance?.contents,
@@ -84,19 +82,16 @@ export const EditMaintenance = () => {
     }
   }
 
-  const onSubmit = async (input: Maintenance) => {
+  const onSubmit = async (input: UpdateMaintenanceInput) => {
 
     try{
-      await API.graphql(graphqlOperation(createMaintenance, { input }))
+      await API.graphql(graphqlOperation(updateMaintenance, { input }))
       navigate("/ships")
 
       }catch(err) {
         console.log(err)
       }
   }
-  console.log(defaultValues)
-
-
 
   useEffect (() => {
     if(formState.isSubmitSuccessful) {
@@ -177,6 +172,7 @@ export const EditMaintenance = () => {
                 <Controller
                   name="priority"
                   control={control}
+                  rules={validationRoles.priority}
                   render={({ field, fieldState }) => (
                     <TextField select fullWidth {...field} type="number" helperText={fieldState.error?.message} >
                       <MenuItem value={""}></MenuItem>
