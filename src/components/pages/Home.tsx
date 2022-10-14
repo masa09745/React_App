@@ -1,31 +1,28 @@
-import { useState, useEffect } from 'react'
-
+import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react'
-import { useNavigate } from 'react-router-dom'
-import { Button, Typography } from '@mui/material'
+import { Button, Typography, Box, Card } from '@mui/material'
+
+import { Link } from 'react-router-dom'
 
 
 export const Home = () => {
-  const { user , signOut} = useAuthenticator((context)=> [
-    context.user,
-    context.signOut,
-  ]) 
-
-  const navigate = useNavigate()
-
-  const logOut =  async(e: React.MouseEvent<HTMLButtonElement>) => {
-    signOut();
-    navigate('/auth');
-  }
+  const { user } = useAuthenticator((context)=> [context.user])
 
   return(
     <>
-      Homeページ 
-      <Typography>
-        {user?.username}
-      </Typography>
+      <Box sx={{ width: 650, m:"auto", p:1}}>
+        <Typography variant="h5" component="h5" sx={{mb:1}}>
+          ユーザー名 : {user?.username}
+        </Typography>
+        <Link to={"ships"}>
+          <Button variant="contained">
+            機材管理へ
+          </Button>
+        </Link>
 
-      <Button  onClick={logOut}>サインアウト</Button>
+      </Box>
+
+
     </>
   )
 }

@@ -60,7 +60,7 @@ export const ShipDetails = memo(() => {
               選択中の機番 : {selectShip}
             </div>
             {user.username === "admin_user" ?
-              <Link to={`create`} state={{id: id, selectShip: selectShip}} >
+              <Link to={"create"} state={{id: id, selectShip: selectShip}} >
                 <Button variant="contained">新規作成</Button>
               </Link> : <></>
             }
